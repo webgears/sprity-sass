@@ -21,6 +21,12 @@ var transform = Promise.method(function (layouts, source, opt, Handlebars) {
 
 module.exports = {
   process: function (layouts, opt, Handlebars) {
+    layouts.sort(function(a, b){
+      var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase();
+      if (nameA < nameB) return -1; //sort string ascending
+      if (nameA > nameB) return 1;
+      return 0; //default return value (no sorting)
+    });
     return getTemplate(opt)
       .then(function (source) {
         return transform(layouts, source, opt, Handlebars);
